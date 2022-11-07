@@ -16,6 +16,28 @@ const GetAllServices = async (req: Request, res: Response) => {
   }
 };
 
+const GetServiceById = async (req: Request, res: Response) => {
+  try {
+    const service = await Service.findById(req.params.id);
+
+    if (!service) {
+      return res.status(400).json({
+        success: false,
+        message: "Service Not Found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: service,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
 const CreateNewService = async (req: Request, res: Response) => {
   try {
     const newService = await Service.create(req.body);
@@ -31,4 +53,4 @@ const CreateNewService = async (req: Request, res: Response) => {
   }
 };
 
-export { CreateNewService, GetAllServices };
+export { CreateNewService, GetAllServices, GetServiceById };
