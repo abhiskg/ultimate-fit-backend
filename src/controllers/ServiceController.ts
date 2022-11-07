@@ -1,6 +1,21 @@
 import { Request, Response } from "express";
 import Service from "../models/Service";
 
+const CreateNewService = async (req: Request, res: Response) => {
+  try {
+    const newService = await Service.create(req.body);
+    res.status(200).json({
+      success: true,
+      data: newService,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
 const GetAllServices = async (req: Request, res: Response) => {
   try {
     const allServices = await Service.find({});
@@ -38,12 +53,22 @@ const GetServiceById = async (req: Request, res: Response) => {
   }
 };
 
-const CreateNewService = async (req: Request, res: Response) => {
+const UpdateService = async (req: Request, res: Response) => {
   try {
-    const newService = await Service.create(req.body);
+    const service = await Service.findByIdAndUpdate(req.params.id, {
+      ...req.body,
+    });
+
+    if (!service) {
+      return res.status(400).json({
+        success: false,
+        message: "Service Not Found",
+      });
+    }
+
     res.status(200).json({
       success: true,
-      data: newService,
+      data: service,
     });
   } catch (error: any) {
     res.status(400).json({
@@ -53,4 +78,4 @@ const CreateNewService = async (req: Request, res: Response) => {
   }
 };
 
-export { CreateNewService, GetAllServices, GetServiceById };
+export { CreateNewService, GetAllServices, GetServiceById, UpdateService };
