@@ -1,6 +1,7 @@
 import express from "express";
 import {
   CreateNewService,
+  DeleteService,
   GetAllServices,
   GetServiceById,
   UpdateService,
@@ -11,6 +12,10 @@ const router = express.Router();
 router.get("/", GetAllServices);
 router.post("/", CreateNewService);
 
-router.route("/:id").get(GetServiceById).patch(UpdateService);
+router
+  .route("/:id")
+  .get(GetServiceById)
+  .patch(UpdateService)
+  .delete(DeleteService);
 
 export default router;
