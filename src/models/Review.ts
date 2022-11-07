@@ -2,27 +2,29 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const serviceSchema = new Schema(
+const reviewSchema = new Schema(
   {
-    name: {
+    review: {
       type: String,
-      required: true,
-      unique: true,
-    },
-    price: {
-      type: Number,
       required: true,
     },
     image: {
       type: String,
+    },
+    rating: {
+      type: Number,
       required: true,
     },
-    description: {
+    userEmail: {
       type: String,
+      required: true,
+    },
+    serviceId: {
+      type: Schema.Types.ObjectId,
       required: true,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Service", serviceSchema);
+export default mongoose.model("Review", reviewSchema);

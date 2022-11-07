@@ -1,0 +1,110 @@
+import { Request, Response } from "express";
+import Review from "../models/Review";
+
+const CreateNewReview = async (req: Request, res: Response) => {
+  try {
+    const newReview = await Review.create(req.body);
+    res.status(200).json({
+      success: true,
+      data: newReview,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const GetAllReviews = async (req: Request, res: Response) => {
+  try {
+    const allReviews = await Review.find({});
+    res.status(200).json({
+      success: true,
+      data: allReviews,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const GetReviewById = async (req: Request, res: Response) => {
+  try {
+    const review = await Review.findById(req.params.id);
+
+    if (!review) {
+      return res.status(400).json({
+        success: false,
+        message: "Review Not Found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: review,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const UpdateReview = async (req: Request, res: Response) => {
+  try {
+    const review = await Review.findByIdAndUpdate(req.params.id, {
+      ...req.body,
+    });
+
+    if (!review) {
+      return res.status(400).json({
+        success: false,
+        message: "Review Not Found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: review,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const DeleteReview = async (req: Request, res: Response) => {
+  try {
+    const review = await Review.findByIdAndDelete(req.params.id);
+
+    if (!review) {
+      return res.status(400).json({
+        success: false,
+        message: "Review Not Found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: review,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+export {
+  CreateNewReview,
+  GetAllReviews,
+  GetReviewById,
+  UpdateReview,
+  DeleteReview,
+};
