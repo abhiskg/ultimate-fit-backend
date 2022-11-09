@@ -17,12 +17,23 @@ const CreateNewReview = async (req: Request, res: Response) => {
 };
 
 const GetAllReviews = async (req: Request, res: Response) => {
+  const serviceId = req.query.serviceId;
+  const userEmail = req.query.userEmail;
   try {
-    const allReviews = await Review.find({});
-    res.status(200).json({
-      success: true,
-      data: allReviews,
-    });
+    if (serviceId) {
+      const allReviews = await Review.find({ serviceId: serviceId });
+
+      res.status(200).json({
+        success: true,
+        data: allReviews,
+      });
+    } else if (userEmail) {
+      const allReviews = await Review.find({ userEmail: userEmail });
+      res.status(200).json({
+        success: true,
+        data: allReviews,
+      });
+    }
   } catch (error: any) {
     res.status(400).json({
       success: false,

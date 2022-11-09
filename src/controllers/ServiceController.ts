@@ -17,11 +17,17 @@ const CreateNewService = async (req: Request, res: Response) => {
 };
 
 const GetAllServices = async (req: Request, res: Response) => {
+  const page = parseInt(req.query.page as string);
+  const limit = parseInt(req.query.limit as string);
   try {
-    const allServices = await Service.find({});
+    const allServices = await Service.find({})
+      .skip(page * limit)
+      .limit(limit);
+    const totalServices = await Service.countDocuments();
     res.status(200).json({
       success: true,
       data: allServices,
+      count: totalServices,
     });
   } catch (error: any) {
     res.status(400).json({

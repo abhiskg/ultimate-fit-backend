@@ -8,12 +8,12 @@ const reviewSchema = new Schema(
       type: String,
       required: true,
     },
-    image: {
+    userName: {
       type: String,
-    },
-    rating: {
-      type: Number,
       required: true,
+    },
+    userImage: {
+      type: String,
     },
     userEmail: {
       type: String,
