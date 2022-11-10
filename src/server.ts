@@ -21,7 +21,7 @@ app.use("/api/services", ServiceRoute);
 // Review-Routes
 app.use("/api/reviews", ReviewRoute);
 
-// JWT-Route
+// JWT-Route-Protection
 app.post("/api/jwt", (req, res) => {
   const user = req.body;
 
