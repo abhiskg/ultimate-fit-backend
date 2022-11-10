@@ -8,42 +8,51 @@ const CreateNewReview = async (req: Request, res: Response) => {
       success: true,
       data: newReview,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      error: (error as Error).message,
+    });
+  }
+};
+
+const GetMyReviews = async (req: Request, res: Response) => {
+  const userEmail = req.query.userEmail;
+  const decoded = req.decoded;
+
+  if (userEmail !== decoded.email) {
+    return res.status(403).json({
+      success: false,
+      message: "Forbidden Access",
+    });
+  }
+
+  try {
+    const allReviews = await Review.find({ userEmail: userEmail });
+    res.status(200).json({
+      success: true,
+      data: allReviews,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: (error as Error).message,
     });
   }
 };
 
 const GetAllReviews = async (req: Request, res: Response) => {
   const serviceId = req.query.serviceId;
-  const userEmail = req.query.userEmail;
-  const decoded = req.decoded;
 
   try {
-    if (serviceId) {
-      const allReviews = await Review.find({ serviceId: serviceId }).sort({
-        createdAt: -1,
-      });
+    const allReviews = await Review.find({ serviceId: serviceId }).sort({
+      createdAt: -1,
+    });
 
-      res.status(200).json({
-        success: true,
-        data: allReviews,
-      });
-    } else if (userEmail) {
-      if (userEmail !== decoded.email) {
-        return res.status(403).json({
-          success: false,
-          message: "Forbidden Access",
-        });
-      }
-      const allReviews = await Review.find({ userEmail: userEmail });
-      res.status(200).json({
-        success: true,
-        data: allReviews,
-      });
-    }
+    res.status(200).json({
+      success: true,
+      data: allReviews,
+    });
   } catch (error: any) {
     res.status(400).json({
       success: false,
@@ -66,10 +75,10 @@ const GetReviewById = async (req: Request, res: Response) => {
       success: true,
       data: review,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      error: (error as Error).message,
     });
   }
 };
@@ -91,10 +100,10 @@ const UpdateReview = async (req: Request, res: Response) => {
       success: true,
       data: review,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      error: (error as Error).message,
     });
   }
 };
@@ -114,10 +123,10 @@ const DeleteReview = async (req: Request, res: Response) => {
       success: true,
       data: review,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      error: (error as Error).message,
     });
   }
 };
@@ -128,4 +137,5 @@ export {
   GetReviewById,
   UpdateReview,
   DeleteReview,
+  GetMyReviews,
 };

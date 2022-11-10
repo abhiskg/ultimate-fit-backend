@@ -5,7 +5,7 @@ dotenv.config();
 
 const dbConnect = () => {
   return mongoose.connect(process.env.MONGO_URI as string, {
-    dbName: "service-review",
+    dbName: "ultimate-fit",
   });
 };
 

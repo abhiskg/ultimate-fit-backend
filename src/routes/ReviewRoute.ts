@@ -3,6 +3,7 @@ import {
   CreateNewReview,
   DeleteReview,
   GetAllReviews,
+  GetMyReviews,
   GetReviewById,
   UpdateReview,
 } from "../controllers/ReviewController";
@@ -11,7 +12,8 @@ import VerifyJWT from "../middlewares/VerifyJWT";
 
 const router = express.Router();
 
-router.get("/", VerifyJWT, GetAllReviews);
+router.get("/", GetAllReviews);
+router.get("/my-reviews", VerifyJWT, GetMyReviews);
 router.post("/", CreateNewReview);
 
 router

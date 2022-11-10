@@ -8,10 +8,10 @@ const CreateNewService = async (req: Request, res: Response) => {
       success: true,
       data: newService,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      error: (error as Error).message,
     });
   }
 };
@@ -30,10 +30,10 @@ const GetAllServices = async (req: Request, res: Response) => {
       data: allServices,
       count: totalServices,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      error: (error as Error).message,
     });
   }
 };
@@ -52,10 +52,10 @@ const GetServiceById = async (req: Request, res: Response) => {
       success: true,
       data: service,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      error: (error as Error).message,
     });
   }
 };
@@ -77,10 +77,10 @@ const UpdateService = async (req: Request, res: Response) => {
       success: true,
       data: service,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      error: (error as Error).message,
     });
   }
 };
@@ -100,10 +100,10 @@ const DeleteService = async (req: Request, res: Response) => {
       success: true,
       data: service,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      error: (error as Error).message,
     });
   }
 };
