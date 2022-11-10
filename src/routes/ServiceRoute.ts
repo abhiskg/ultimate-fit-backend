@@ -6,6 +6,7 @@ import {
   GetServiceById,
   UpdateService,
 } from "../controllers/ServiceController";
+import ValidateId from "../middlewares/ValidateId";
 
 const router = express.Router();
 
@@ -17,5 +18,8 @@ router
   .get(GetServiceById)
   .patch(UpdateService)
   .delete(DeleteService);
+
+// middleware to validate Id
+router.param("id", ValidateId);
 
 export default router;

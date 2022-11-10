@@ -21,7 +21,9 @@ const GetAllReviews = async (req: Request, res: Response) => {
   const userEmail = req.query.userEmail;
   try {
     if (serviceId) {
-      const allReviews = await Review.find({ serviceId: serviceId });
+      const allReviews = await Review.find({ serviceId: serviceId }).sort({
+        createdAt: -1,
+      });
 
       res.status(200).json({
         success: true,

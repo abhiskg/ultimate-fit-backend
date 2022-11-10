@@ -21,6 +21,7 @@ const GetAllServices = async (req: Request, res: Response) => {
   const limit = parseInt(req.query.limit as string);
   try {
     const allServices = await Service.find({})
+      .sort({ createdAt: -1 })
       .skip(page * limit)
       .limit(limit);
     const totalServices = await Service.countDocuments();

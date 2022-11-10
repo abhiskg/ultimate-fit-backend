@@ -11,8 +11,10 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// Service-Routes
 app.use("/api/services", ServiceRoute);
 
+// Review-Routes
 app.use("/api/reviews", ReviewRoute);
 
 dbConnect()
