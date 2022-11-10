@@ -19,6 +19,8 @@ const CreateNewReview = async (req: Request, res: Response) => {
 const GetAllReviews = async (req: Request, res: Response) => {
   const serviceId = req.query.serviceId;
   const userEmail = req.query.userEmail;
+  const decoded = req.decoded;
+
   try {
     if (serviceId) {
       const allReviews = await Review.find({ serviceId: serviceId }).sort({
@@ -30,6 +32,12 @@ const GetAllReviews = async (req: Request, res: Response) => {
         data: allReviews,
       });
     } else if (userEmail) {
+      if (userEmail !== decoded.email) {
+        return res.status(403).json({
+          success: false,
+          message: "Forbidden Access",
+        });
+      }
       const allReviews = await Review.find({ userEmail: userEmail });
       res.status(200).json({
         success: true,

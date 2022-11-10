@@ -7,10 +7,11 @@ import {
   UpdateReview,
 } from "../controllers/ReviewController";
 import ValidateId from "../middlewares/ValidateId";
+import VerifyJWT from "../middlewares/VerifyJWT";
 
 const router = express.Router();
 
-router.get("/", GetAllReviews);
+router.get("/", VerifyJWT, GetAllReviews);
 router.post("/", CreateNewReview);
 
 router
