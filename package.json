@@ -2,10 +2,11 @@
   "name": "sr-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon src/server.ts",
-    "start": "node dist/server.js",
+    "dev": "nodemon src/index.ts",
+    "start": "node dist/index.js",
     "build": "tsc"
   },
   "keywords": [],
